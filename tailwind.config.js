@@ -5,9 +5,9 @@ export default {
     extend: {
       colors: {
         magenta: {
-          400: '#f472b6',
-          500: '#ec4899',
-          600: '#db2777',
+          400: '#a78bfa',
+          500: '#8b5cf6',
+          600: '#7c3aed',
         },
       },
     },

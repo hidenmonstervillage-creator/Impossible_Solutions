@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react';
-import { Calendar, Send, CheckCircle2 } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { Send, CheckCircle2, ArrowRight } from 'lucide-react';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export default function Booking() {
   const [formData, setFormData] = useState({
@@ -21,22 +22,16 @@ export default function Booking() {
     setError('');
 
     try {
-      const { error: submitError } = await supabase
-        .from('bookings')
-        .insert([formData]);
-
-      if (submitError) throw submitError;
-
-      setIsSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        business_name: '',
-        website: '',
-        business_description: '',
+      const res = await fetch(`${API_URL}/api/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
 
+      if (!res.ok) throw new Error('Request failed');
+
+      setIsSuccess(true);
+      setFormData({ name: '', email: '', phone: '', business_name: '', website: '', business_description: '' });
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (err) {
       setError('Неуспешно изпращане на заявката. Моля, опитайте отново.');
@@ -47,159 +42,123 @@ export default function Booking() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const inputClass =
+    'w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all text-sm';
+
   return (
-    <section id="booking" className="relative py-24 bg-gray-900">
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.02)_1px,transparent_1px)] bg-[size:100px_100px]"></div>
+    <section id="booking" className="bg-gray-950 border-t border-white/10">
 
-      <div className="relative container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-cyan-500/20 to-magenta-500/20 border border-cyan-500/30 mb-6">
-              <Calendar className="w-8 h-8 text-cyan-400" />
+      {/* CTA block */}
+      <div className="py-32 border-b border-white/10">
+        <div className="container mx-auto px-8 md:px-16 text-center">
+          <p className="text-xs font-mono text-gray-600 uppercase tracking-widest mb-6">Следваща стъпка</p>
+          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tight mb-8 leading-tight">
+            Готови ли сте да{' '}
+            <span className="bg-gradient-to-r from-cyan-400 to-magenta-400 text-transparent bg-clip-text">
+              скалирате?
+            </span>
+          </h2>
+          <p className="text-gray-400 text-base max-w-md mx-auto mb-10">
+            Направете запитване днес и получете безплатна консултация за вашия бизнес.
+          </p>
+          <a
+            href="#booking-form"
+            onClick={(e) => { e.preventDefault(); document.getElementById('booking-form')?.scrollIntoView({ behavior: 'smooth' }); }}
+            className="group inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-950 text-sm font-bold rounded-full hover:bg-gray-100 transition-colors"
+          >
+            Направи запитване
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
+        </div>
+      </div>
+
+      {/* Form */}
+      <div id="booking-form" className="py-24">
+        <div className="container mx-auto px-8 md:px-16">
+          <div className="max-w-2xl mx-auto">
+            <div className="mb-10">
+              <p className="text-xs font-mono text-gray-600 uppercase tracking-widest mb-3">Контакт форма</p>
+              <h3 className="text-3xl font-black text-white tracking-tight">Разкажете ни за бизнеса си</h3>
             </div>
-            <h2 className="text-5xl md:text-6xl font-bold text-white mb-4">
-              Направи <span className="bg-gradient-to-r from-cyan-400 to-magenta-500 text-transparent bg-clip-text">запитване</span>
-            </h2>
-          </div>
 
-          <div className="bg-gray-950/50 backdrop-blur-lg border border-cyan-500/20 rounded-2xl p-8 md:p-12">
-            {isSuccess ? (
-              <div className="text-center py-12">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-cyan-500/20 mb-6">
-                  <CheckCircle2 className="w-10 h-10 text-cyan-400" />
-                </div>
-                <h3 className="text-3xl font-bold text-white mb-4">Успешно!</h3>
-                <p className="text-gray-400 text-lg">
-                  Получихме вашата заявка за резервация. Ще се свържем с вас в рамките на 24 часа.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                      Пълно име *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-                      placeholder="Иван Иванов"
-                    />
+            <div className="bg-white/[0.03] border border-white/10 rounded-3xl p-8 md:p-10">
+              {isSuccess ? (
+                <div className="text-center py-10">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-6">
+                    <CheckCircle2 className="w-7 h-7 text-cyan-400" />
                   </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                      Имейл адрес *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-                      placeholder="ivan@example.com"
-                    />
+                  <h3 className="text-2xl font-bold text-white mb-3">Успешно изпратено!</h3>
+                  <p className="text-gray-400 text-sm">
+                    Ще се свържем с вас в рамките на 24 часа.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                      <label htmlFor="name" className="block text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                        Пълно име *
+                      </label>
+                      <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange} className={inputClass} placeholder="Иван Иванов" />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                        Имейл *
+                      </label>
+                      <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} className={inputClass} placeholder="ivan@example.com" />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className="block text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                        Телефон *
+                      </label>
+                      <input type="tel" id="phone" name="phone" required value={formData.phone} onChange={handleChange} className={inputClass} placeholder="+359 88 123 4567" />
+                    </div>
+                    <div>
+                      <label htmlFor="business_name" className="block text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                        Бизнес *
+                      </label>
+                      <input type="text" id="business_name" name="business_name" required value={formData.business_name} onChange={handleChange} className={inputClass} placeholder="Моята компания" />
+                    </div>
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
-                      Телефонен номер *
+                    <label htmlFor="website" className="block text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                      Уебсайт
                     </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-                      placeholder="+359 88 123 4567"
-                    />
+                    <input type="url" id="website" name="website" value={formData.website} onChange={handleChange} className={inputClass} placeholder="https://example.com" />
                   </div>
 
                   <div>
-                    <label htmlFor="business_name" className="block text-sm font-medium text-gray-300 mb-2">
-                      Име на бизнеса *
+                    <label htmlFor="business_description" className="block text-xs text-gray-500 mb-2 uppercase tracking-wider">
+                      Опишете бизнеса си *
                     </label>
-                    <input
-                      type="text"
-                      id="business_name"
-                      name="business_name"
-                      required
-                      value={formData.business_name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-                      placeholder="Моята компания"
-                    />
+                    <textarea id="business_description" name="business_description" rows={4} required value={formData.business_description} onChange={handleChange} className={`${inputClass} resize-none`} placeholder="Какво продавате/предлагате и на кого?" />
                   </div>
-                </div>
 
-                <div>
-                  <label htmlFor="website" className="block text-sm font-medium text-gray-300 mb-2">
-                    Уебсайт (незадължително)
-                  </label>
-                  <input
-                    type="url"
-                    id="website"
-                    name="website"
-                    value={formData.website}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all"
-                    placeholder="https://example.com"
-                  />
-                </div>
+                  {error && (
+                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
+                      {error}
+                    </div>
+                  )}
 
-                <div>
-                  <label htmlFor="business_description" className="block text-sm font-medium text-gray-300 mb-2">
-                    Опишете вашия бизнес в 1-2 изречения *
-                  </label>
-                  <textarea
-                    id="business_description"
-                    name="business_description"
-                    rows={4}
-                    required
-                    value={formData.business_description}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all resize-none"
-                    placeholder="Какво продавате/предлагате и на кого?"
-                  ></textarea>
-                </div>
-
-                {error && (
-                  <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400">
-                    {error}
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-cyan-500 to-magenta-500 text-white text-lg font-semibold rounded-lg overflow-hidden transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(6,182,212,0.6)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-                >
-                  <span className="relative z-10">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full group inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-gray-950 text-sm font-bold rounded-xl hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
                     {isSubmitting ? 'Изпращане...' : 'Запази среща'}
-                  </span>
-                  <Send className="relative z-10 w-5 h-5 transition-transform group-hover:translate-x-1" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-magenta-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                </button>
-              </form>
-            )}
+                    <Send className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>
+
     </section>
   );
 }

@@ -1,38 +1,36 @@
-const values = [
+const steps = [
   {
-    title: 'Мисия',
-    description: 'Приходи за нас. Приходи и спестено време за вас. Ние изграждаме системи, а не само уебсайтове.',
+    title: 'Запитване',
+    description: 'Попълнете формата и ни разкажете за бизнеса си. Ще се свържем с вас в рамките на 24 часа за безплатна консултация.',
   },
   {
-    title: 'Иновации',
-    description: 'България изостава с около 5 години от световния пазар. Тези, които първи внедрят вече доказалите се системи, стават лидери в своята индустрия.',
+    title: 'Анализ и стратегия',
+    description: 'Анализираме вашия пазар, конкуренцията и нуждите ви. Изготвяме персонализирана стратегия с ясни цели и KPI-та.',
   },
   {
-    title: 'Доверен партньор',
-    description: 'От агенции до специалисти, нашите клиенти ни вярват да доставяме съвършенство всеки път - без компромиси.',
+    title: 'Изпълнение и резултати',
+    description: 'Реализираме решението - уебсайт, автоматизация или маркетинг кампания. Следим резултатите и оптимизираме непрекъснато.',
   },
 ];
 
-export default function About() {
+export default function Steps() {
   return (
-    <section id="about" className="py-32 bg-gray-950">
+    <section className="py-32 bg-gray-950 border-t border-white/10">
       <div className="container mx-auto px-8 md:px-16">
         <div className="max-w-4xl mx-auto">
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-8 border-b border-white/10">
           <h2 className="text-5xl md:text-6xl font-black text-white tracking-tight">
-            За{' '}
+            Как{' '}
             <span className="bg-gradient-to-r from-cyan-400 to-magenta-400 text-transparent bg-clip-text">
-              Нас
+              работим
             </span>
           </h2>
-          <p className="text-gray-400 text-sm max-w-sm leading-relaxed">
-            Дигиталното присъствие вече не е достатъчно. Нуждаете се от стратегия, която доминира пазара.
-          </p>
+          <p className="text-gray-400 text-sm">Процесът - прост и прозрачен.</p>
         </div>
 
         <div>
-          {values.map((value, i) => (
+          {steps.map((step, i) => (
             <div
               key={i}
               className="border-b border-white/10 py-10 group cursor-default"
@@ -43,10 +41,10 @@ export default function About() {
                 </span>
                 <div className="flex flex-col md:flex-row gap-4 md:gap-16 flex-1">
                   <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors md:w-52 shrink-0">
-                    {value.title}
+                    {step.title}
                   </h3>
                   <p className="text-gray-400 text-sm leading-relaxed flex-1">
-                    {value.description}
+                    {step.description}
                   </p>
                 </div>
               </div>

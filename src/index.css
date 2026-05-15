@@ -8,16 +8,36 @@
   }
 
   body {
-    @apply antialiased;
+    @apply antialiased bg-gray-950;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-950;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cyan-500/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-cyan-500/50;
   }
 }
 
 @layer utilities {
-  .animate-pulse {
-    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  .animate-pulse-slow {
+    animation: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
   .delay-700 {
     animation-delay: 700ms;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-cyan-400 to-magenta-400 text-transparent bg-clip-text;
   }
 }

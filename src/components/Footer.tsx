@@ -1,33 +1,72 @@
 import { Phone } from 'lucide-react';
 
+const links = [
+  { label: 'За нас', id: 'about' },
+  { label: 'Клиенти', id: 'work' },
+  { label: 'Запитване', id: 'booking' },
+  { label: 'Контакти', id: 'contact' },
+];
+
 export default function Footer() {
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <footer id="contact" className="relative bg-gray-950 border-t border-cyan-500/20">
-      <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Контакти</h4>
-            <div className="space-y-3">
+    <footer id="contact" className="bg-gray-950 border-t border-white/10">
+      <div className="container mx-auto px-8 md:px-16 py-16">
+        <div className="max-w-4xl mx-auto">
+
+        <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
+          <div className="max-w-xs">
+            <div className="flex items-center gap-3 mb-4">
+              <img src="/is logo (2).png" alt="Impossible Solutions" className="w-8 h-8 object-contain" />
+              <span className="text-sm font-bold text-white">Impossible Solutions</span>
+            </div>
+            <p className="text-xs text-gray-500 leading-relaxed">
+              AI автоматизации, уебсайтове и дигитален маркетинг. Невъзможни решения за всеки възможен проблем.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-12">
+            <div>
+              <p className="text-xs text-gray-600 uppercase tracking-widest mb-4 font-mono">Навигация</p>
+              <ul className="space-y-2">
+                {links.map((link) => (
+                  <li key={link.id}>
+                    <button
+                      onClick={() => scrollTo(link.id)}
+                      className="text-sm text-gray-400 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p className="text-xs text-gray-600 uppercase tracking-widest mb-4 font-mono">Контакти</p>
               <a
                 href="tel:+359886516012"
-                className="flex items-center gap-3 text-gray-400 hover:text-cyan-400 transition-colors"
+                className="flex items-center gap-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors"
               >
-                <Phone className="w-5 h-5" />
-                <span>+359 88 651 6012</span>
+                <Phone className="w-3.5 h-3.5" />
+                +359 88 651 6012
               </a>
             </div>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-gray-800 flex items-center justify-center">
-          <p className="text-gray-500 text-sm text-center">
-            Вие мечтаете.<br />
-            Ние реализираме.
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-gray-600">
+            © {new Date().getFullYear()} Impossible Solutions. Всички права запазени.
           </p>
+          <p className="text-xs text-gray-600 italic">Вие мечтаете. Ние реализираме.</p>
+        </div>
+
         </div>
       </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-magenta-500 to-cyan-500"></div>
     </footer>
   );
 }
