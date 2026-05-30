@@ -29,8 +29,7 @@ const clientCategories = [
       { id: 8, name: 'Spark Vision', url: 'https://sparkvision.tech/', title: 'Технологична компания', image: '/sparkvision.png' },
       { id: 9, name: 'ProMedica24', url: 'https://www.promedica24.bg/', title: 'Здравна грижа у дома', image: '/promedica 24 logo.jpg' },
       { id: 10, name: 'Clinic Scales', url: 'https://www.clinicscales.com/', title: 'Медицинско оборудване', image: '/logo1.1.png' },
-      { id: 11, name: 'In Baddies We Trust', url: 'https://inbaddieswetrust.pro/', title: 'Бизнес платформа', image: '/ibwt logo.png' },
-      { id: 12, name: 'Virality', url: 'https://virality.cc', title: 'Дигитален маркетинг', image: '/virality logo.jpeg' },
+{ id: 12, name: 'Virality', url: 'https://virality.cc', title: 'Дигитален маркетинг', image: '/virality logo.jpeg' },
     ],
   },
 ];
@@ -46,7 +45,7 @@ export default function Work() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-8 border-b border-white/10">
           <h2 className="text-5xl md:text-6xl font-black text-white tracking-tight">
             Нашата{' '}
-            <span className="bg-gradient-to-r from-cyan-400 to-magenta-400 text-transparent bg-clip-text">
+            <span className="bg-gradient-to-r from-cyan-400 to-violet-500 text-transparent bg-clip-text">
               Работа
             </span>
           </h2>

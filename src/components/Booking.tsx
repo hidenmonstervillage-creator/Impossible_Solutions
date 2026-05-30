@@ -1,7 +1,7 @@
 import { useState, FormEvent } from 'react';
 import { Send, CheckCircle2, ArrowRight } from 'lucide-react';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 export default function Booking() {
   const [formData, setFormData] = useState({
@@ -57,7 +57,7 @@ export default function Booking() {
           <p className="text-xs font-mono text-gray-600 uppercase tracking-widest mb-6">Следваща стъпка</p>
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tight mb-8 leading-tight">
             Готови ли сте да{' '}
-            <span className="bg-gradient-to-r from-cyan-400 to-magenta-400 text-transparent bg-clip-text">
+            <span className="bg-gradient-to-r from-cyan-400 to-violet-500 text-transparent bg-clip-text">
               скалирате?
             </span>
           </h2>

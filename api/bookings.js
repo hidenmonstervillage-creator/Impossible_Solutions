@@ -1,13 +1,4 @@
-require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
-const express = require('express');
-const cors = require('cors');
 const { Pool } = require('pg');
-
-const app = express();
-const PORT = process.env.PORT || 3001;
-
-app.use(cors({ origin: process.env.CLIENT_URL || ['http://localhost:5173', 'https://localhost:5173'] }));
-app.use(express.json());
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -24,7 +15,11 @@ pool.query(`
   )
 `).catch(console.error);
 
-app.post('/api/bookings', async (req, res) => {
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   const { name, email, phone, business_name, website, business_description } = req.body;
 
   if (!name || !email || !phone || !business_name || !business_description) {
@@ -42,8 +37,4 @@ app.post('/api/bookings', async (req, res) => {
     console.error(err);
     res.status(500).json({ error: 'Failed to save booking' });
   }
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+}

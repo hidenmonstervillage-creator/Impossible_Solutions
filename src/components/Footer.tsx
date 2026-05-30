@@ -19,9 +19,8 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
           <div className="max-w-xs">
-            <div className="flex items-center gap-3 mb-4">
-              <img src="/is logo (2).png" alt="Impossible Solutions" className="w-8 h-8 object-contain" />
-              <span className="text-sm font-bold text-white">Impossible Solutions</span>
+            <div className="mb-4">
+              <img src="/im.png" alt="Impossible Solutions" className="h-16 w-auto object-contain" />
             </div>
             <p className="text-xs text-gray-500 leading-relaxed">
               AI автоматизации, уебсайтове и дигитален маркетинг. Невъзможни решения за всеки възможен проблем.

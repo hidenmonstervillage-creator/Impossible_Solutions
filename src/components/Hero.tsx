@@ -17,7 +17,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-between overflow-hidden pt-24">
       <div className="absolute inset-0 bg-gray-950">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(6,182,212,0.08),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(34,211,238,0.08),transparent)]" />
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:72px_72px]" />
       </div>
 
@@ -31,7 +31,7 @@ export default function Hero() {
           <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[7rem] font-black text-white leading-[1] tracking-tight mb-8">
             Вие мечтаете.
             <br />
-            <span className="bg-gradient-to-r from-cyan-400 to-magenta-400 text-transparent bg-clip-text">
+            <span className="bg-gradient-to-r from-cyan-400 to-violet-500 text-transparent bg-clip-text">
               Ние реализираме.
             </span>
           </h1>

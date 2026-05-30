@@ -38,6 +38,6 @@
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-cyan-400 to-magenta-400 text-transparent bg-clip-text;
+    @apply bg-gradient-to-r from-cyan-400 to-violet-500 text-transparent bg-clip-text;
   }
 }

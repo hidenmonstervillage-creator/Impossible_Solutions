@@ -4,10 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        magenta: {
-          400: '#a78bfa',
-          500: '#8b5cf6',
-          600: '#7c3aed',
+        gray: {
+          950: '#080f22',
         },
       },
     },
