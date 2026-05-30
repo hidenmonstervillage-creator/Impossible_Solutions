@@ -30,7 +30,7 @@ export default function Hero() {
             Дигитална агенция · Приемаме нови клиенти
           </div>
 
-          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[7rem] font-black text-white leading-[1] tracking-tight mb-8">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1] tracking-tight mb-8">
             Вие мечтаете.
             <br />
             <span className="bg-gradient-to-r from-cyan-400 to-violet-500 text-transparent bg-clip-text">
