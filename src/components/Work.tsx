@@ -12,7 +12,7 @@ const clientCategories = [
   {
     category: 'Клиники и медицински центрове',
     clients: [
-      { id: 4, name: "Mimi's Wellmed", url: '#', title: 'Wellness център', image: "/Mimi's wellmed.png" },
+      { id: 4, name: "Mimi's Wellmed", url: 'https://mimiswellmed.eu/', title: 'Wellness център', image: "/Mimi's wellmed.png" },
     ],
   },
   {
@@ -26,8 +26,7 @@ const clientCategories = [
   {
     category: 'Други',
     clients: [
-      { id: 8, name: 'Spark Vision', url: 'https://sparkvision.tech/', title: 'Технологична компания', image: '/sparkvision.png' },
-      { id: 9, name: 'ProMedica24', url: 'https://www.promedica24.bg/', title: 'Здравна грижа у дома', image: '/promedica 24 logo.jpg' },
+{ id: 9, name: 'ProMedica24', url: 'https://www.promedica24.bg/', title: 'Здравна грижа у дома', image: '/promedica 24 logo.jpg' },
       { id: 10, name: 'Clinic Scales', url: 'https://www.clinicscales.com/', title: 'Медицинско оборудване', image: '/logo1.1.png' },
 { id: 12, name: 'Virality', url: 'https://virality.cc', title: 'Дигитален маркетинг', image: '/virality logo.jpeg' },
     ],
